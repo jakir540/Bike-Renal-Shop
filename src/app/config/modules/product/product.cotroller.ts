@@ -81,8 +81,71 @@ const getSingleProductController = async (req: Request, res: Response) => {
   }
 };
 
+// update
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const productData = req.body;
+    const result = await ProductServices.updateProductIntoDB(
+      productId,
+      productData,
+    );
+
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Product updated successfully',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Product update failed',
+      error: error,
+    });
+  }
+};
+
+//for delete functionality
+
+const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await ProductServices.deleteProductIntoDB(productId);
+
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Product Deleted successfully',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Product delete failed',
+      error: error,
+    });
+  }
+};
+
 export const ProductController = {
   createProduct,
   getAllProductsController,
   getSingleProductController,
+  updateProduct,
+  deleteProduct,
 };
