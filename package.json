@@ -3,10 +3,13 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "joi": "^17.13.1",
     "mongoose": "^8.3.5"
   },
   "scripts": {
     "build": "tsc",
+    "start:dev": " ts-node-dev --respawn --transpile-only ./src/server.ts ",
+    "start:prod": "node ./dist/server.js",
     "lint": "eslint src --ext .ts,.tsx",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "prettier:fix": "npx prettier --write src",
@@ -23,6 +26,7 @@
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.2.0",
     "prettier": "^3.2.5",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.4.5",
     "typescript-eslint": "^7.9.0"
   }
