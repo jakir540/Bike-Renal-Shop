@@ -46,19 +46,44 @@ const createProduct = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
-
-// get all products controller function
-
+// get all products and with search query
 const getAllProductsController = async (req: Request, res: Response) => {
+  const { searchTerm } = req.query;
+
+  // const searchTerm: string = req.query.searchTerm as string;
+
   try {
-    const result = await ProductServices.getAllProducts();
-    res.status(200).json({
-      success: true,
-      message: 'Products fetched successfully!',
-      data: result,
-    });
+    let result;
+
+    if (searchTerm) {
+      result = await ProductServices.searceProductIntoDB(searchTerm as string);
+
+      if (result && result.length > 0) {
+        res.status(200).json({
+          success: true,
+          message: 'Products matching search term fetched successfully',
+          data: result,
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: 'No products matching search term found',
+        });
+      }
+    } else {
+      result = await ProductServices.getAllProducts();
+      res.status(200).json({
+        success: true,
+        message: 'Products fetch successfully',
+        data: result,
+      });
+    }
   } catch (error) {
-    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'An error occured while fetching products',
+      error,
+    });
   }
 };
 
@@ -152,54 +177,10 @@ const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
-//for searce functionality
-//todo
-const searchProduct = async (req: Request, res: Response) => {
-  try {
-    // const { searchTerm } = req.query;
-    const searchTerm: string = req.query.searchTerm as string;
-
-    const result = await ProductServices.searceProductIntoDB(
-      searchTerm as string,
-    );
-
-    // if (searchTerm) {
-    //   result = await ProductServices.searceProductIntoDB(searchTerm as string);
-    // } else {
-    //   result = await ProductServices.getAllProducts();
-    // }
-
-    // const result = await ProductServices.searceProductIntoDB(
-    //   searchTerm as string,
-    // );
-
-    if (result) {
-      res.status(200).json({
-        success: true,
-        message: 'Products matching search term fetched successfully!',
-        data: result,
-      });
-    } else {
-      res.status(404).json({
-        success: false,
-        message: 'Product not found',
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      success: false,
-      message: 'Product not found',
-      error: error,
-    });
-  }
-};
-
 export const ProductController = {
   createProduct,
   getAllProductsController,
   getSingleProductController,
   updateProduct,
   deleteProduct,
-  searchProduct,
 };

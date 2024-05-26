@@ -66,7 +66,12 @@ git clone https://github.com/jakir540/techmart
 
 ### GET /api/products?searchTerm=searchTerm
 
-9. Install dependencies:
-10. Install dependencies:
+9. create order:
+
+### POST /api/orders
+
+10. Get Order:
+
+### GET /api/orders
 
 11. Install Vercel CLI:
