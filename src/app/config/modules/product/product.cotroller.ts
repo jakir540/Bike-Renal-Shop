@@ -46,7 +46,7 @@ const createProduct = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
-// get all products and with search query
+// get all products and get specific document with search query by name
 const getAllProductsController = async (req: Request, res: Response) => {
   const { searchTerm } = req.query;
 

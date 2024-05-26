@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { Product } from './product.interface';
 
-// Define the Variant schema
+// Variant schema
 const variantSchema = new Schema(
   {
     type: {
