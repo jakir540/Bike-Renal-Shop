@@ -8,6 +8,7 @@ const createProductIntoDB = async (product: Product) => {
 
 const getAllProducts = async () => {
   const allProduct = await ProductModel.find();
+
   return allProduct;
 };
 
@@ -29,6 +30,27 @@ const deleteProductIntoDB = async (productId: string) => {
   const result = await ProductModel.findByIdAndDelete(productId);
   return result;
 };
+//Searce specific value
+const searceProductIntoDB = async (searchTerm: string) => {
+  // const searchTermReges = new RegExp(searchTerm, 'i');
+  // console.log({ searchTermReges });
+
+  // const result = await ProductModel.find({
+  //   $or: [
+  //     { name: searchTermReges },
+  //     { description: searchTermReges },
+  //     { category: searchTermReges },
+  //     { tags: { $in: [searchTermReges] } },
+  //   ],
+  // });
+
+  const result = await ProductModel.find({
+    name: new RegExp(searchTerm as string, 'i'),
+  });
+  // const result = await ProductModel.find({ $text: { $search: searchTerm } });
+
+  return result;
+};
 
 export const ProductServices = {
   createProductIntoDB,
@@ -36,4 +58,5 @@ export const ProductServices = {
   getSingleProduct,
   updateProductIntoDB,
   deleteProductIntoDB,
+  searceProductIntoDB,
 };

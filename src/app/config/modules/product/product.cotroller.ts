@@ -1,29 +1,28 @@
 import { Request, Response } from 'express';
 import { ProductServices } from './product.service';
 import Joi from 'joi';
+const variantValidationSchema = Joi.object({
+  type: Joi.string().required(),
+  value: Joi.string().required(),
+});
+
+const inventoryValidationSchema = Joi.object({
+  quantity: Joi.number().required(),
+  inStock: Joi.boolean().required(),
+});
+
+const productValidatonSchema = Joi.object({
+  name: Joi.string().min(3).max(20).required(),
+  description: Joi.string().required(),
+  price: Joi.number().required(),
+  category: Joi.string().required(),
+  tags: Joi.array().items(Joi.string()).default([]),
+  variants: Joi.array().items(variantValidationSchema).default([]),
+  inventory: inventoryValidationSchema.required(),
+});
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const variantValidationSchema = Joi.object({
-      type: Joi.string().required(),
-      value: Joi.string().required(),
-    });
-
-    const inventoryValidationSchema = Joi.object({
-      quantity: Joi.number().required(),
-      inStock: Joi.boolean().required(),
-    });
-
-    const productValidatonSchema = Joi.object({
-      name: Joi.string().min(3).max(20).required(),
-      description: Joi.string().required(),
-      price: Joi.number().required(),
-      category: Joi.string().required(),
-      tags: Joi.array().items(Joi.string()).default([]),
-      variants: Joi.array().items(variantValidationSchema).default([]),
-      inventory: inventoryValidationSchema.required(),
-    });
-
     const product = req.body.product;
 
     const { error } = productValidatonSchema.validate(product);
@@ -81,11 +80,23 @@ const getSingleProductController = async (req: Request, res: Response) => {
   }
 };
 
-// update
+// update section
 const updateProduct = async (req: Request, res: Response) => {
+  const product = req.body;
+  const { error } = productValidatonSchema.validate(product);
+
+  if (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Somethink went wrong',
+      error,
+    });
+  }
+
   try {
     const { productId } = req.params;
     const productData = req.body;
+
     const result = await ProductServices.updateProductIntoDB(
       productId,
       productData,
@@ -119,12 +130,11 @@ const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const result = await ProductServices.deleteProductIntoDB(productId);
-
     if (result) {
       res.status(200).json({
         success: true,
         message: 'Product Deleted successfully',
-        data: result,
+        data: null,
       });
     } else {
       res.status(404).json({
@@ -142,10 +152,54 @@ const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
+//for searce functionality
+//todo
+const searchProduct = async (req: Request, res: Response) => {
+  try {
+    // const { searchTerm } = req.query;
+    const searchTerm: string = req.query.searchTerm as string;
+
+    const result = await ProductServices.searceProductIntoDB(
+      searchTerm as string,
+    );
+
+    // if (searchTerm) {
+    //   result = await ProductServices.searceProductIntoDB(searchTerm as string);
+    // } else {
+    //   result = await ProductServices.getAllProducts();
+    // }
+
+    // const result = await ProductServices.searceProductIntoDB(
+    //   searchTerm as string,
+    // );
+
+    if (result) {
+      res.status(200).json({
+        success: true,
+        message: 'Products matching search term fetched successfully!',
+        data: result,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: 'Product not found',
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: 'Product not found',
+      error: error,
+    });
+  }
+};
+
 export const ProductController = {
   createProduct,
   getAllProductsController,
   getSingleProductController,
   updateProduct,
   deleteProduct,
+  searchProduct,
 };
