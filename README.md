@@ -36,6 +36,8 @@ TechMart is an API for managing products in an store management application. It 
 ```bash
 git clone https://github.com/jakir540/techmart
 
+live cite: https://techmart-three.vercel.app/
+
 ```
 
 2. Install dependencies:
