@@ -23,7 +23,7 @@ const productValidatonSchema = Joi.object({
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const product = req.body.product;
+    const product = req.body;
 
     const { error } = productValidatonSchema.validate(product);
 
