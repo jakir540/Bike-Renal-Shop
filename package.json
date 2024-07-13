@@ -4,11 +4,12 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "joi": "^17.13.1",
-    "mongoose": "^8.3.5"
+    "mongoose": "^8.3.5",
+    "zod": "^3.23.8"
   },
   "scripts": {
     "build": "tsc",
-    "start:dev": " ts-node-dev --respawn --transpile-only ./src/server.ts ",
+    "start": " ts-node-dev --respawn --transpile-only ./src/server.ts ",
     "start:prod": "node ./dist/server.js",
     "lint": "eslint src --ext .ts,.tsx",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",

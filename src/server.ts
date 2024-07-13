@@ -1,4 +1,4 @@
-import config from './app/config';
+import config from './app/config/index';
 
 import mongoose from 'mongoose';
 import app from './app';
