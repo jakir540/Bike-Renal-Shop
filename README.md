@@ -1,26 +1,22 @@
-# TechMart API
+# Bike Rental Shop
 
-TechMart is an API for managing products in an store management application. It provides endpoints for creating, updating, deleting, and searching for products.
+This project is the backend for a Bike Rental Reservation System built using TypeScript, Express.js, Mongoose, and Zod for validation. The system provides a way for tourists and locals to rent bikes, manage bookings, and handle user authentication and authorization.
 
 ## Features
 
-- Create a new product
-- Get all products
-- Get a single product by ID
-- Update a product by ID
-- Delete a product by ID
-- Search for products by name
-- Create order
-- Get all orders
-- Get a specific order search using email
+- User authentication and authorization
+- CRUD operations for bikes
+- Booking management
+- Data validation with Zod
+- Error handling and middleware
 
 ## Technologies Used
 
-- Node.js
-- Express.js
-- Mongoose (MongoDB)
-- Joi (Validation)
-- TypeScript
+- **Programming Language**: TypeScript
+- **Web Framework**: Express.js
+- **Database**: MongoDB
+- **ODM**: Mongoose
+- **Validation Library**: Zod
 
 ## Getting Started
 
@@ -46,34 +42,76 @@ live cite: https://techmart-three.vercel.app/
 
 3. Start the server:
 
-### npm run start:dev
+### npm run start
 
 4. API Endpoints: post api
 
-### POST /api/products
+### POST /api/auth/signup
 
-5.Get All Products:
+5.Login api :
 
-### GET /api/products/:productId
+### POST /api/auth/login
 
-6. Update product:
+6. Get Profile:
 
-### PUT /api/products/:productId
+### GET /api/users/me
 
-7. Delete specific product:
+## Request Headers: Authorization: Bearer jwt_token
 
-### DELETE /api/products/:productId
+7. Update Profile:
 
-8.searce product using by name:
+### PUT: /api/users/me
 
-### GET /api/products?searchTerm=searchTerm
+## Request Headers: Authorization: Bearer jwt_token
 
-9. create order:
+8 Create Bike (Admin Only):
 
-### POST /api/orders
+### POST /api/bikes
 
-10. Get Order:
+## Request Headers: Authorization: Bearer jwt_token
 
-### GET /api/orders
+9.  Get All Bikes:
 
-11. Install Vercel CLI:
+### GET /api/bikes
+
+10. Update Bike (Admin Only):
+
+### PUT /api/bikes/:id
+
+## Request Headers: Authorization: Bearer jwt_token
+
+11. Delete Bike (Admin Only):
+
+### DELETE /api/bikes/:id
+
+## Request Headers: Authorization: Bearer jwt_token
+
+12. ### Rental Routes
+
+Create Rental:
+
+## POST /api/rentals
+
+## Request Headers: Authorization: Bearer jwt_token
+
+13. ### Get All Rentals (Admin Only)
+
+## GET /api/rentals
+
+## Request Headers: Authorization: Bearer jwt_token
+
+14. ### Get Rental by ID
+
+## GET /api/rentals/:id
+
+## Request Headers: Authorization: Bearer jwt_token
+
+15. ### Update Rental (Admin Only)
+
+## PUT /api/rentals/:id
+
+## Request Headers: Authorization: Bearer jwt_token
+
+## Middleware and Error Handling
+
+16. Install Vercel CLI:
