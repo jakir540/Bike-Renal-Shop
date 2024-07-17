@@ -4,6 +4,7 @@ import catchAsyn from '../../utiles/catchAsync';
 import httpStatus from 'http-status';
 import { BikeServices } from './bike.services';
 
+// create bike into db
 const createBike: RequestHandler = catchAsyn(async (req, res) => {
   const result = await BikeServices.createBikeIntoDB(req.body);
   sendResponse(res, {
@@ -13,8 +14,18 @@ const createBike: RequestHandler = catchAsyn(async (req, res) => {
     data: result,
   });
 });
+
+// get all bikes into db
+
 const getAllBikes: RequestHandler = catchAsyn(async (req, res) => {
   const result = await BikeServices.getAllBikesIntoDB();
+  if (result.length === 0) {
+    return res.status(httpStatus.NOT_FOUND).json({
+      success: false,
+      message: 'bikes not found',
+      data: result,
+    });
+  }
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -38,7 +49,7 @@ const updateBike: RequestHandler = catchAsyn(async (req, res) => {
     data: updatedBike,
   });
 });
-// delete bike
+// for delete bike
 
 const deleteBike: RequestHandler = catchAsyn(async (req, res) => {
   const id = req.params.id;

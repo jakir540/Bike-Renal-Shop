@@ -1,3 +1,5 @@
+import httpStatus from 'http-status';
+import AppError from '../../../errors/appError';
 import { TBike } from './bike.interface';
 import { Bike } from './bike.model';
 // create bike
@@ -14,29 +16,34 @@ const getAllBikesIntoDB = async () => {
 
 const updateBikesIntoDB = async (id: string, updatedData: TBike) => {
   const bike = await Bike.findById(id);
-
+  // if didnot get bike throw error
   if (!bike) {
-    throw new Error('bike is not exist in DB');
+    throw new AppError(httpStatus.NOT_FOUND, 'bike is not exist in DB');
   }
+  // update bike
   const updateBike = await Bike.findByIdAndUpdate(id, updatedData, {
     new: true,
   });
+
+  // if not updated bike data show error
   if (!updateBike) {
-    throw new Error('could not updated bike');
+    throw new AppError(httpStatus.NOT_MODIFIED, 'could not updated bike');
   }
   return updateBike;
 };
 
 // delete Bike
 const deleteBikesIntoDB = async (id: string) => {
-  const updatedBike = await Bike.findByIdAndUpdate(id, { isAvailable: false });
+  const bike = await Bike.findByIdAndUpdate(id, { isAvailable: false });
 
-  if (!updatedBike) {
-    throw new Error('bike is not exist in DB');
+  // if didno't get bike then show error
+  if (!bike) {
+    throw new AppError(httpStatus.NOT_FOUND, 'bike is not exist in DB');
   }
   const delelteBike = await Bike.findByIdAndDelete(id);
+  // if didno't delelteBike bike then show error
   if (!delelteBike) {
-    throw new Error('could not delele bike');
+    throw new AppError(httpStatus.NOT_IMPLEMENTED, 'could not delete bike');
   }
   return delelteBike;
 };

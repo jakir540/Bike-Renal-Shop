@@ -1,35 +1,34 @@
 import { Request, Response } from 'express';
 import { UserServices } from './user.services';
+import catchAsync from '../../utiles/catchAsync';
+import sendResponse from '../../utiles/sendResponse';
+import httpStatus from 'http-status';
 
-const createUser = async (req: Request, res: Response) => {
-  try {
-    const result = await UserServices.createUserIntoDB(req.body);
+// get profile form DB
+const getProfile = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.getProfileIntoDB(req);
 
-    res.status(200).json({
-      success: true,
-      message: 'User is created succesfully',
-      data: result,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User profile retrived succesfully',
+    data: result,
+  });
+});
 
-const getAllUser = async (req: Request, res: Response) => {
-  try {
-    const result = await UserServices.getAllUserIntoDB();
+// update profile into db
 
-    res.status(200).json({
-      success: true,
-      message: 'User is get succesfully',
-      data: result,
-    });
-  } catch (err) {
-    console.log(err);
-  }
+const updateProfile = async (req: Request, res: Response) => {
+  const result = await UserServices.updateProfileIntoDB(req);
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'User profile update succesfully',
+    data: result,
+  });
 };
 
 export const UserControllers = {
-  createUser,
-  getAllUser,
+  getProfile,
+  updateProfile,
 };
