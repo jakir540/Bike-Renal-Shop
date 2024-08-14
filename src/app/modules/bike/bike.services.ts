@@ -16,6 +16,8 @@ const getAllBikesIntoDB = async () => {
 
 const updateBikesIntoDB = async (id: string, updatedData: TBike) => {
   const bike = await Bike.findById(id);
+  console.log({ bike });
+  console.log('bike services', { id });
   // if didnot get bike throw error
   if (!bike) {
     throw new AppError(httpStatus.NOT_FOUND, 'bike is not exist in DB');

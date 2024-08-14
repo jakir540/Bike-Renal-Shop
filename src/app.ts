@@ -1,6 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import router from './app/routes';
+import notFountRoutes from './app/middleware/notFoundRoute';
+import globalErrorHandler from './app/middleware/globalErrorHandler';
 
 const app: Application = express();
 
@@ -8,16 +10,17 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 
-//application route
-
 // application routes
 app.use('/api', router);
 
-app.use((req: Request, res: Response) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route Not Found ',
-  });
+//server route
+app.get('/', (req: Request, res: Response) => {
+  res.send('welcome to bike booking shop');
 });
+// not found route
+app.use(notFountRoutes);
+
+// error handling full project
+app.use(globalErrorHandler);
 
 export default app;

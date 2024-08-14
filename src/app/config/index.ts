@@ -9,4 +9,5 @@ export default {
   BRYCPT_SLAT: process.env.beycrypt_slat_rounds,
   DEFAULT_PASSWORD: process.env.default_password,
   jwt_acces_secret: process.env.JWT_ACCESS_SECRET_TOKEN,
+  NODE_ENV: process.env.NODE_ENV,
 };

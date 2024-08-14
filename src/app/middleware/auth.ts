@@ -9,9 +9,10 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 const auth = (...requireRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     // token check
-    console.log('12line', req.headers.authorization);
+    // console.log('12line', req.headers.authorization);
 
     const token = req.headers.authorization;
+
     console.log('token', token);
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authrized');
@@ -24,19 +25,23 @@ const auth = (...requireRoles: TUserRole[]) => {
       config.jwt_acces_secret as string,
     ) as JwtPayload;
 
+    console.log('decoded://', decoded);
+
     const { email, role } = decoded;
+    console.log(email);
 
     if (requireRoles && !requireRoles.includes(role)) {
       return res.status(httpStatus.UNAUTHORIZED).json({
         success: false,
         statusCode: httpStatus.UNAUTHORIZED,
-        message: 'You have a unathorized',
+        message: 'You have an unathorized',
       });
     }
 
     req.user = decoded;
 
     next();
+    return req.user;
   });
 };
 

@@ -1,71 +1,22 @@
 import { z } from 'zod';
 
-export const bookingValidationSchema = z.object({
-  userId: z
-    .string({
-      invalid_type_error: 'userId must be a string',
+const bookingValidationSchema = z.object({
+  userId: z.string().optional(),
+  bikeId: z.string().min(1, { message: 'Bike Id is required' }),
+  startTime: z
+    .string()
+    .refine((value) => !isNaN(Date.parse(value)), {
+      message: 'Invalid date string',
     })
-    .optional(),
-  bikeId: z
-    .string({
-      invalid_type_error: 'bikeId must be a string',
-    })
-    .min(1, { message: 'Bike id is required' }),
-  startTime: z.string({
-    invalid_type_error: 'startTime must be a string',
-  }),
+    .transform((val) => new Date(val)),
   returnTime: z
-    .string({
-      invalid_type_error: 'returnTime must be a string',
-    })
-    .optional(),
-  totalCost: z.number({
-    invalid_type_error: 'totalCost must be a number',
-  }),
-  isReturned: z
-    .boolean({
-      invalid_type_error: 'isReturned must be a boolean',
-    })
-    .default(false),
-});
-
-export const UpdateBookingValidationSchema = z.object({
-  body: z.object({
-    userId: z
-      .string({
-        invalid_type_error: 'userId must be a string',
-      })
-      .optional(),
-    bikeId: z
-      .string({
-        invalid_type_error: 'bikeId must be a string',
-      })
-      .optional(),
-    startTime: z
-      .string({
-        invalid_type_error: 'startTime must be a string',
-      })
-      .optional(),
-    returnTime: z
-      .string({
-        invalid_type_error: 'returnTime must be a string',
-      })
-      .optional(),
-    totalCost: z
-      .number({
-        invalid_type_error: 'totalCost must be a number',
-      })
-      .optional(),
-    isReturned: z
-      .boolean({
-        invalid_type_error: 'isReturned must be a boolean',
-      })
-      .default(false)
-      .optional(),
-  }),
+    .string()
+    .optional()
+    .transform((string) => (string ? new Date(string) : null)),
+  totalCost: z.number().optional().default(0),
+  isReturned: z.boolean().optional().default(false),
 });
 
 export const bookingValidation = {
   bookingValidationSchema,
-  UpdateBookingValidationSchema,
 };

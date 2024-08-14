@@ -20,4 +20,4 @@ const bookingSchema = new Schema<TBooking>({
   isReturned: { type: Boolean, default: false },
 });
 
-export const Booking = model<TBooking>('Model', bookingSchema);
+export const Booking = model<TBooking>('booking', bookingSchema);

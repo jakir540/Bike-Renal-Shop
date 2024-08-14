@@ -43,7 +43,7 @@ const updateProfileIntoDB = async (req: Request) => {
   }
 
   // update profile using email
-  const updateProfile = await User.findByIdAndUpdate(
+  const updateProfile = await User.findOneAndUpdate(
     { email: user?.email },
     req.body,
     {

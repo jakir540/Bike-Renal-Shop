@@ -38,7 +38,7 @@ const UpdateUserValidationSchema = z.object({
       invalid_type_error: 'email must be string',
     })
     .optional(),
-  phone: z.string().min(11, { message: 'phone number minimum 11 ' }).optional(),
+  phone: z.string().optional(),
   address: z
     .string({
       invalid_type_error: 'address must be string',

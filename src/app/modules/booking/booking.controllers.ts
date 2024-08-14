@@ -18,6 +18,7 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
 // for return booking
 
 const returnRental = catchAsync(async (req: Request, res: Response) => {
+  console.log('new', req);
   const result = await BookingServices.returnRentalIntoDB(req.params.id);
   sendResponse(res, {
     success: true,
@@ -29,7 +30,7 @@ const returnRental = catchAsync(async (req: Request, res: Response) => {
 
 // for all get booking rental of user
 const getAllRentalsForUser = catchAsync(async (req: Request, res: Response) => {
-  const result = await BookingServices.getAllRentalOfUserIntoDB(req.body);
+  const result = await BookingServices.getAllRentalOfUserIntoDB(req);
 
   if (result.length === 0) {
     return res.status(httpStatus.NOT_FOUND).json({
