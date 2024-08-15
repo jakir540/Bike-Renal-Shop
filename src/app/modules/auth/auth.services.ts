@@ -19,8 +19,8 @@ const userSignUpIntoDB = async (payload: TSignupUser) => {
 
   // remove the password field while send the response
   const user = result.toObject();
-  const { password, ...remainingUserData } = user;
-  // console.log(password);
+  const { ...remainingUserData } = user;
+
   return remainingUserData;
 };
 
@@ -29,7 +29,7 @@ const userSignUpIntoDB = async (payload: TSignupUser) => {
 const userLoginIntoDB = async (payload: TSignupUser) => {
   // checking the user exist or not
   const user = await User.findOne({ email: payload?.email });
-  console.log('user32', user);
+  // console.log('user32', user);
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'User is not found');
@@ -42,7 +42,7 @@ const userLoginIntoDB = async (payload: TSignupUser) => {
     user.password,
   );
 
-  console.log('password', payload?.password);
+  // console.log('password', payload?.password);
   if (!isPasswordMatched) {
     throw new AppError(httpStatus.FORBIDDEN, 'password is not correct ');
   }
@@ -50,7 +50,7 @@ const userLoginIntoDB = async (payload: TSignupUser) => {
   // removing the password,createdAt,updatedAt field in response
 
   const removeFields = user.toObject();
-  const { password, createdAt, updatedAt, ...remainingData } = removeFields;
+  const { ...remainingData } = removeFields;
   // console.log(password, createdAt, updatedAt);
   // create jwt token and send to the client
 

@@ -6,11 +6,10 @@ import httpStatus from 'http-status';
 const getProfileIntoDB = async (req: Request) => {
   // get in user from req , set user in req in auth from jwt payload
   const user = req.user;
-  console.log('user service 09', user);
 
   // find user in db using email
   const isUserExists = await User.findOne({ email: user.email });
-  console.log('user exist user 09', isUserExists);
+  // console.log('user exist user 09', isUserExists);
 
   //show error if don'T find the user
 
@@ -20,7 +19,7 @@ const getProfileIntoDB = async (req: Request) => {
 
   // remove the password field in res
   const removeFields = isUserExists?.toObject();
-  const { password, ...remainingData } = removeFields;
+  const { ...remainingData } = removeFields;
   return remainingData;
 };
 
@@ -62,9 +61,7 @@ const updateProfileIntoDB = async (req: Request) => {
   //remove password field in res
 
   const removePass = updateProfile?.toObject();
-  const { password, createdAt, updatedAt, ...remainingData } = removePass;
-
-  // console.log(password, createdAt, updatedAt);
+  const { ...remainingData } = removePass;
 
   return remainingData;
 };

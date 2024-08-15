@@ -17,9 +17,9 @@
   "scripts": {
     "build": "tsc",
     "start": " ts-node-dev --respawn --transpile-only ./src/server.ts ",
+    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "start:prod": "node ./dist/server.js",
     "lint": "eslint src --ext .ts,.tsx",
-    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "prettier:fix": "npx prettier --write src",
     "lint:fix": "npx eslint src --fix"
   },

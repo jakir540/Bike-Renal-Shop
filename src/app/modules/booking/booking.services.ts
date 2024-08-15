@@ -8,12 +8,12 @@ import { Booking } from './booking.model';
 const createBookingIntoDB = async (req: Request) => {
   const bookingInfo = req.body;
 
-  console.log('booking services bookininfo', bookingInfo);
+  // console.log('booking services bookininfo', bookingInfo);
 
   // check the DB bike is in or not
 
   const isBikeExists = await Bike.findById(bookingInfo.bikeId);
-  console.log({ isBikeExists });
+  // console.log({ isBikeExists });
   if (!isBikeExists) {
     throw new AppError(httpStatus.NOT_FOUND, 'bike is not found');
   }
@@ -29,7 +29,7 @@ const createBookingIntoDB = async (req: Request) => {
   // set the user info into rental info
 
   bookingInfo.userId = authUser.userId;
-  console.log({ bookingInfo });
+  // console.log({ bookingInfo });
 
   // for more than one write operation uses transaction and rolleback session
 
@@ -78,9 +78,9 @@ const createBookingIntoDB = async (req: Request) => {
 // return booking rental
 const returnRentalIntoDB = async (id: string) => {
   // check the bike exists or not
-  console.log('id service', id);
+  // console.log('id service', id);
   const isBookingBikeExits = await Booking.findById(id);
-  console.log(isBookingBikeExits);
+  // console.log(isBookingBikeExits);
 
   if (!isBookingBikeExits) {
     throw new AppError(httpStatus.NOT_FOUND, 'booking bike not found');
@@ -174,11 +174,10 @@ const returnRentalIntoDB = async (id: string) => {
 // return booking rental
 const getAllRentalOfUserIntoDB = async (req: Request) => {
   // get the sign in user Id,emai and role from auth
-  console.log('services...........', req);
+
   const authUser = req.user;
-  console.log('auth user : ', authUser);
+  // console.log('auth user : ', authUser);
   const RentalUser = await Booking.find({ userId: authUser?.userId });
-  console.log({ RentalUser });
   return RentalUser;
 };
 
