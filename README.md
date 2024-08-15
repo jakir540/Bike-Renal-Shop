@@ -30,9 +30,9 @@ This project is the backend for a Bike Rental Reservation System built using Typ
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/jakir540/techmart
+git clone: https://github.com/jakir540/Bike-Renal-Shop
 
-live cite: https://techmart-three.vercel.app/
+live cite: https://bike-rental-shop.vercel.app/
 
 ```
 
