@@ -37,7 +37,7 @@ const getAllBikes: RequestHandler = catchAsyn(async (req, res) => {
 // updated bike
 
 const updateBike: RequestHandler = catchAsyn(async (req, res) => {
-  console.log('request;;;;;;', req.params);
+  console.log('request', req.params);
   const id = req.params.id;
   console.log({ id });
   const UpdatedData = req.body;
