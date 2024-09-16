@@ -11,7 +11,8 @@ const auth = (...requireRoles: TUserRole[]) => {
     // token check
     // console.log('12line', req.headers.authorization);
 
-    const token = req.headers.authorization;
+    // const token = req.headers.authorization;
+    const token = req.headers.authorization?.split(' ')[1];
 
     console.log('token', token);
     if (!token) {
