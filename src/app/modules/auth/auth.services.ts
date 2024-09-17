@@ -16,10 +16,11 @@ const userSignUpIntoDB = async (payload: TSignupUser) => {
   payload.password = hashPassword;
 
   const result = await User.create(payload);
+  console.log(result);
 
-  // remove the password field while send the response
-  const user = result.toObject();
-  const { ...remainingUserData } = user;
+  // removing password field while sending the response
+  const removeField = result.toObject();
+  const { password, ...remainingUserData } = removeField;
 
   return remainingUserData;
 };

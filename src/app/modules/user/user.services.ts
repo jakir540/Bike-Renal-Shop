@@ -19,7 +19,7 @@ const getProfileIntoDB = async (req: Request) => {
 
   // remove the password field in res
   const removeFields = isUserExists?.toObject();
-  const { ...remainingData } = removeFields;
+  const { password, ...remainingData } = removeFields;
   return remainingData;
 };
 
@@ -61,7 +61,7 @@ const updateProfileIntoDB = async (req: Request) => {
   //remove password field in res
 
   const removePass = updateProfile?.toObject();
-  const { ...remainingData } = removePass;
+  const { password, ...remainingData } = removePass;
 
   return remainingData;
 };
